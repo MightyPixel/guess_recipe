@@ -54,7 +54,7 @@ ALL_PRODUCTS = [
 
 class GuessRecipe(GeneticFunction):
         def __init__(self, target,
-                     limit=200, size=400,
+                     limit=900, size=400,
                      prob_crossover=0.9, prob_mutation=0.2):
             self.target = self.products_to_chromo(target)
             self.counter = 0
@@ -111,9 +111,9 @@ class GuessRecipe(GeneticFunction):
 
         def mutation(self, chromosome):
             index = random.randint(0, len(self.target) - 1)
-            vary = random.randint(-5, 5)
+            vary = random.randint(0, len(ALL_PRODUCTS) - 1)
             mutated = list(chromosome)
-            mutated[index] += vary
+            mutated[index] = vary
             return mutated
 
         # internals
@@ -137,7 +137,7 @@ class GuessRecipe(GeneticFunction):
             return [ALL_PRODUCTS[index] for index in chromo]
 
         def random_chromo(self):
-            return [random.randint(0, len(ALL_PRODUCTS)) for i in range(len(self.target))]
+            return [random.randint(0, len(ALL_PRODUCTS) - 1) for i in range(len(self.target))]
 
         pass
 

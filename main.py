@@ -37,6 +37,18 @@ ALL_PRODUCTS = [
     "celery",
     "orange",
     "bacon",
+
+    # operations
+    "bake",
+    "fry",
+    "chill",
+    "wash",
+    "mix",
+    "boil",
+    "steam",
+    "melt",
+    "spray",
+    "chop",
 ]
 
 
@@ -130,5 +142,5 @@ class GuessRecipe(GeneticFunction):
         pass
 
 if __name__ == "__main__":
-    lasagna = ["tomatoes", "cheese", "sweet Italian sausage", "garlic"]
+    lasagna = ["tomatoes", "steam", "cheese", "melt", "sweet Italian sausage", "mix", "garlic"]
     GeneticAlgorithm(GuessRecipe(lasagna)).run()

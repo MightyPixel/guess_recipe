@@ -54,11 +54,11 @@ ALL_PRODUCTS = [
 
 class GuessRecipe(GeneticFunction):
         def __init__(self, target,
-                     limit=900, size=400,
+                     limit=900, size=300, selection_rate=0.2,
                      prob_crossover=0.9, prob_mutation=0.2):
             self.target = self.products_to_chromo(target)
             self.counter = 0
-
+            self.selection_rate = selection_rate
             self.limit = limit
             self.size = size
             self.prob_crossover = prob_crossover
@@ -78,10 +78,15 @@ class GuessRecipe(GeneticFunction):
             # larger is better, matched == 0
             return -sum(abs(c - t) for c, t in zip(chromo, self.target))
 
-        def check_stop(self, fits_populations):
+        def check_stop(self, fits_population):
             self.counter += 1
-            best_match = list(sorted(fits_populations))[-1][1]
-            fits = [f for f, ch in fits_populations]
+            fits_population.sort()
+            fits_population.reverse()
+            best_end = int(len(fits_population) * self.selection_rate)
+            fits_population = fits_population[0:best_end]
+            best_match = fits_population[0][1]
+
+            fits = [f for f, ch in fits_population]
             best = max(fits)
             worst = min(fits)
             ave = sum(fits) / len(fits)

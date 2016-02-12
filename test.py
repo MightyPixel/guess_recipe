@@ -2,84 +2,68 @@ import pylab
 
 from main import *
 
-PROBS_CROSSOVER = range(1, 9)
-PROBS_MUTATION = range(5, 40, 5)
+PROBS_CROSSOVER = range(1, 10)
+PROBS_MUTATION = range(0, 40, 5)
 PROBS_SELECTION = range(1, 9)
-REPEAT_COUNT = 5
+REPEAT_COUNT = 10
+
+ALL_PROBS = sorted(PROBS_CROSSOVER + PROBS_MUTATION + PROBS_SELECTION)
+print ALL_PROBS
 
 values = []
 
+pylab.figure(1)
+pylab.title('Crossove (red), Mutation (green), Selection (blue) Probs/Avg population')
+pylab.xlabel('%')
+pylab.ylabel('Avg Generations')
+pylab.grid(True)
+lasagna = ["tomatoes", "steam", "cheese", "melt", "sweet Italian sausage", "mix", "garlic"]
+
 def plot_crossover():
-    pylab.figure(1)
-    pylab.title('Crossover Prob/Avg population')
-    pylab.xlabel('Crossover Prob')
-    pylab.ylabel('Avg Generations')
-    pylab.grid(True)
-
-    lasagna = ["tomatoes", "steam", "cheese", "melt", "sweet Italian sausage", "mix", "garlic"]
-
-    values = []
-    for i in PROBS_CROSSOVER:
+    pylab.title('Crossove (red) Probs/Avg population')
+    for prob in PROBS_CROSSOVER:
         results = []
         for i in range(REPEAT_COUNT):
-            result = GeneticAlgorithm(GuessRecipe(lasagna, prob_crossover = 0.1 * i)).run()
+            result = GeneticAlgorithm(GuessRecipe(lasagna, prob_crossover = 0.1 * prob)).run()
             results.append(result)
 
         values.append(sum(results) / len(results))
 
     print values
-    pylab.plot(sorted(values), PROBS_CROSSOVER, 'r--')
-    pylab.savefig('crossoverprob')
-    pylab.show()
+    pylab.plot(PROBS_CROSSOVER, values, 'r--')
+
 
 def plot_mutation():
-    pylab.figure(1)
-    pylab.title('Mutation Prob/Avg population')
-    pylab.xlabel('Mutation Prob')
-    pylab.ylabel('Avg Generations')
-    pylab.grid(True)
-
-    lasagna = ["tomatoes", "steam", "cheese", "melt", "sweet Italian sausage", "mix", "garlic"]
-
-    values = []
-    for i in PROBS_MUTATION:
+    pylab.title('Mutation (green) Probs/Avg population')
+    for prob in PROBS_MUTATION:
         results = []
         for i in range(REPEAT_COUNT):
-            result = GeneticAlgorithm(GuessRecipe(lasagna, prob_mutation = 0.01 * i)).run()
+            result = GeneticAlgorithm(GuessRecipe(lasagna, prob_mutation = 0.01 * prob)).run()
             results.append(result)
 
         values.append(sum(results) / len(results))
 
     print values
-    pylab.plot(sorted(values), PROBS_MUTATION, 'r--')
-    pylab.savefig('mutationprob')
-    pylab.show()
+    pylab.plot(PROBS_MUTATION, values, 'g--')
 
 
 def plot_selection():
-    pylab.figure(1)
-    pylab.title('Selection Prob/Avg population')
-    pylab.xlabel('Selection Prob')
-    pylab.ylabel('Avg Generations')
-    pylab.grid(True)
-
-    lasagna = ["tomatoes", "steam", "cheese", "melt", "sweet Italian sausage", "mix", "garlic"]
-
-    values = []
-    for i in PROBS_SELECTION:
+    pylab.title('Selection (blue) Probs/Avg population')
+    for prob in PROBS_SELECTION:
         results = []
         for i in range(REPEAT_COUNT):
-            result = GeneticAlgorithm(GuessRecipe(lasagna, prob_selection = 0.1 * i)).run()
+            result = GeneticAlgorithm(GuessRecipe(lasagna, prob_selection = 0.1 * prob)).run()
             results.append(result)
 
         values.append(sum(results) / len(results))
 
     print values
-    pylab.plot(sorted(values), PROBS_SELECTION, 'r--')
-    pylab.savefig('mutationprob')
-    pylab.show()
+    pylab.plot(PROBS_SELECTION, values, 'b--')
 
 
+# plot_crossover()
+# plot_mutation()
+plot_selection()
 
-
-plot_mutation()
+pylab.savefig('allprob')
+pylab.show()

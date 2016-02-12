@@ -5,7 +5,8 @@ from main import *
 PROBS_CROSSOVER = range(1, 10)
 PROBS_MUTATION = range(0, 40, 5)
 PROBS_SELECTION = range(1, 9)
-REPEAT_COUNT = 10
+REPEAT_COUNT = 100
+SIZES = range(400, 700, 50)
 
 ALL_PROBS = sorted(PROBS_CROSSOVER + PROBS_MUTATION + PROBS_SELECTION)
 print ALL_PROBS
@@ -61,9 +62,41 @@ def plot_selection():
     pylab.plot(PROBS_SELECTION, values, 'b--')
 
 
+def plot_size():
+    pylab.title('Sizes/Avg population')
+    for size in SIZES:
+        results = []
+        for i in range(REPEAT_COUNT):
+            result = GeneticAlgorithm(GuessRecipe(lasagna, size = size)).run()
+            results.append(result)
+
+        values.append(sum(results) / len(results))
+
+    print values
+    pylab.plot(SIZES, values, 'y--')
+
+def hist():
+    pylab.title('Hist')
+    pylab.xlabel('Generations')
+    pylab.ylabel('Freq')
+
+    results = []
+    for i in range(100):
+        result = GeneticAlgorithm(GuessRecipe(lasagna)).run()
+        results.append(result)
+
+
+    print values
+    pylab.hist(results, 30, facecolor='g', alpha=0.75)
+
+
+
+
 # plot_crossover()
 # plot_mutation()
-plot_selection()
+# plot_selection()
+# plot_size()
+hist()
 
 pylab.savefig('allprob')
 pylab.show()

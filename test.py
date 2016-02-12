@@ -2,6 +2,8 @@ import pylab
 
 from main import *
 
+PROBS = range(1, 9)
+REPEAT_COUNT = 10
 
 pylab.figure(1)
 pylab.title('Crossover Prob/Avg population')
@@ -11,11 +13,14 @@ pylab.ylabel('Avg Generations')
 lasagna = ["tomatoes", "steam", "cheese", "melt", "sweet Italian sausage", "mix", "garlic"]
 
 values = []
-for i in range(1, 9):
-    results = GeneticAlgorithm(GuessRecipe(lasagna, prob_crossover = 0.1 * i)).run()
-    sizes = [len(generation) for generation in results]
-    values.append(sum(sizes) / len(sizes))
+for i in PROBS:
+    results = []
+    for i in range(REPEAT_COUNT):
+        result = GeneticAlgorithm(GuessRecipe(lasagna, prob_crossover = 0.1 * i)).run()
+        results.append(len(result))
 
-pylab.plot(values, range(1, 9))
+    values.append(sum(results) / len(results))
+
+pylab.plot(values, PROBS)
 # pylab.savefig('crossoverprob')
 pylab.show()

@@ -13,7 +13,7 @@ class GeneticAlgorithm(object):
             is_solution = self.genetics.check_stop(fits)
             population = self.next(fits)
 
-        return population
+        return self.genetics.get_generation_count()
 
     def next(self, fits):
         parents_generator = self.genetics.parents(fits)

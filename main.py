@@ -54,7 +54,7 @@ ALL_PRODUCTS = [
 
 class GuessRecipe(GeneticFunction):
         def __init__(self, target,
-                     limit=900, size=300, selection_rate=0.2,
+                     limit=900, size=500, selection_rate=0.2,
                      prob_crossover=0.9, prob_mutation=0.2):
             self.target = self.products_to_chromo(target)
             self.counter = 0
@@ -77,6 +77,9 @@ class GuessRecipe(GeneticFunction):
         def fitness(self, chromo):
             # larger is better, matched == 0
             return -sum(abs(c - t) for c, t in zip(chromo, self.target))
+
+        def get_generation_count(self):
+            return self.counter
 
         def check_stop(self, fits_population):
             self.counter += 1

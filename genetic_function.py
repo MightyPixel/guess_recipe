@@ -17,6 +17,11 @@ class GeneticFunction(object):
         """
         return len(chromosome)
 
+    def get_generation_count(self):
+        r"""return current generation number
+        """
+        return self.counter
+
     def check_stop(self, fits_populations):
         r"""stop run if returns True
         - fits_populations: list of (fitness_value, chromosome)

@@ -54,8 +54,8 @@ ALL_PRODUCTS = [
 
 class GuessRecipe(GeneticFunction):
         def __init__(self, target,
-                     limit=900, size=500, selection_rate=0.2,
-                     prob_crossover=0.9, prob_mutation=0.2):
+                     limit=300, size=500, selection_rate=0.2,
+                     prob_crossover=0.7, prob_mutation=0.2):
             self.target = self.products_to_chromo(target)
             self.counter = 0
             self.selection_rate = selection_rate
